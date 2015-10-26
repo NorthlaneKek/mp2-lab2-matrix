@@ -152,6 +152,7 @@ TVector<ValType>& TVector<ValType>::operator=(const TVector &v)
 		pVector = new ValType[v.Size];
 		Size = v.Size;
 	}
+	StartIndex = v.StartIndex;
 	for (int i = 0; i < Size; i++)
 		pVector[i] = v.pVector[i];
 	return *this;
@@ -191,11 +192,12 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if (Size == v.Size)
 	{
+		TVector tmp(Size);
 		for (int i = 0; i < Size; i++)
 		{
-			pVector[i] += v.pVector[i];
+			tmp.pVector[i] = pVector[i] + v.pVector[i];
 		}
-		return *this;
+		return tmp;
 	}
 	else throw "different length";
 } /*-------------------------------------------------------------------------*/
@@ -324,6 +326,13 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 		}
 		return *this;
 	}
+	else
+	{
+		for (int i = 0; i < Size; i++)
+		{
+			pVector[i] = mt.pVector[i];
+		}
+	}
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
@@ -331,9 +340,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
 	if (Size == mt.Size)
 	{
-		for (int i = 0; i < Size; i++)
-			pVector[i] = pVector[i] + mt.pVector[i];
-			return *this;
+		return TVector <TVector<ValType> > :: operator +(mt);
 	}
 	else throw "different size";
 } /*-------------------------------------------------------------------------*/

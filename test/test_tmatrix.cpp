@@ -36,7 +36,11 @@ TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-  ADD_FAILURE();
+	TMatrix<int> a(5);
+	a[0][0] = 10;
+	TMatrix<int> b(a);
+	a[0][0] = 5;
+	EXPECT_NE(a, b);
 }
 
 TEST(TMatrix, can_get_size)
@@ -137,12 +141,21 @@ TEST(TMatrix, matrices_with_different_size_are_not_equal)
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> a(5), b(5), c(5);
+	for (int i = 0; i < 5; i++)
+	for (int j = i; j < 5; j++)
+		a[i][j] = i * 10 + j;
+	for (int i = 0; i < 5; i++)
+	for (int j = i; j < 5; j++)
+		b[i][j] = i * 5 + j;
+	c = a + b;
+	EXPECT_EQ(c, a + b);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> a(5), b(7), c(7);
+	ASSERT_ANY_THROW(c = a + b);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)

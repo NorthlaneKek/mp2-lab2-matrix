@@ -40,7 +40,12 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 
 TEST(TVector, copied_vector_has_its_own_memory)
 {
-  ADD_FAILURE();
+	TVector <int> a(5);
+	for (int i = 0; i < 5; i++)
+		a[i] = i;
+	TVector<int> b(a);
+	a[0] = 5;
+	EXPECT_NE(a, b);
 }
 
 TEST(TVector, can_get_size)
@@ -170,12 +175,16 @@ TEST(TVector, can_multiply_scalar_by_vector)
 
 TEST(TVector, can_add_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> a(5), b(5), c(5);
+	a[3] = 3;
+	c = a + b;
+	EXPECT_EQ(c, a);
 }
 
 TEST(TVector, cant_add_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	TVector<int> a(5), b(7), c(7);
+	ASSERT_ANY_THROW(c = a + b);
 }
 
 TEST(TVector, can_subtract_vectors_with_equal_size)

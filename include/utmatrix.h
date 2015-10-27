@@ -226,7 +226,7 @@ ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
 	if (Size == v.Size)
 	{
-		int TmpScal = 0;
+		ValType TmpScal = 0;
 		for (int i = 0; i < Size; i++)
 			TmpScal = TmpScal + pVector[i] * v.pVector[i];
 		return TmpScal;
